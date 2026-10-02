@@ -5,19 +5,19 @@
 		<location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="false" type="InstallableUnit">
 			<unit id="de.uka.ipd.sdq.identifier.feature.feature.group" version="0.0.0"/>
 			<unit id="org.palladiosimulator.commons.stoex.sdk.feature.group" version="0.0.0"/>
-			<repository location="https://updatesite.palladio-simulator.com/palladio-core-commons/nightly/"/>
+			<repository location="https://updatesite.palladio-simulator.com/palladio-core-commons/releases/5.2.2/"/>
 		</location>
 		<location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="false" type="InstallableUnit">
 			<unit id="org.palladiosimulator.pcm.feature.feature.group" version="0.0.0"/>
-			<repository location="https://updatesite.palladio-simulator.com/palladio-core-pcm/nightly/"/>
+			<repository location="https://updatesite.palladio-simulator.com/palladio-core-pcm/releases/5.2.2/"/>
 		</location>
 		<location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="false" type="InstallableUnit">
 			<unit id="org.palladiosimulator.pcm.edit" version="0.0.0"/>
-			<repository location="https://updatesite.palladio-simulator.com/palladio-editors-commons/nightly/"/>
+			<repository location="https://updatesite.palladio-simulator.com/palladio-editors-commons/releases/5.2.2/"/>
 		</location>
 		<location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="false" type="InstallableUnit">
 			<unit id="de.uka.ipd.sdq.workflow.feature.core.feature.group" version="0.0.0"/>
-			<repository location="https://updatesite.palladio-simulator.com/palladio-supporting-workflowengine/nightly/"/>
+			<repository location="https://updatesite.palladio-simulator.com/palladio-supporting-workflowengine/releases/5.2.2/"/>
 		</location>
 		<location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="false" type="InstallableUnit">
 			<unit id="tools.mdsd.library.emfeditutils" version="0.0.0"/>
@@ -130,17 +130,17 @@
 <repository location="https://updatesite.palladio-simulator.com/palladio-supporting-branding/releases/latest/"/>
 </location>
 		<location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="false" type="InstallableUnit">
-			<repository location="https://model-based-data-protection-assessments.github.io/updatesite/nightly/gdpr-metamodel"/>
+			<repository location="https://colja-dev.github.io/updatesite/nightly/gdpr-metamodel"/>
 			<unit id="mdpa.gdpr.metamodel.api.feature.feature.group" version="0.0.0"/>
 			<unit id="mdpa.gdpr.metamodel.contextproperties.feature.feature.group" version="0.0.0"/>
 			<unit id="mdpa.gdpr.metamodel.feature.feature.group" version="0.0.0"/>
 		</location>
 		<location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="false" type="InstallableUnit">
-			<repository location="https://model-based-data-protection-assessments.github.io/updatesite/nightly/tracemodel-metamodel"/>
+			<repository location="https://colja-dev.github.io/updatesite/nightly/tracemodel-metamodel"/>
 			<unit id="mdpa.gdpr.dfdconverter.tracemodel.feature.feature.group" version="0.0.0"/>
     </location>
 <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="false" type="InstallableUnit">
-			<repository location="https://model-based-data-protection-assessments.github.io/updatesite/nightly/dfdconverter"/>
+			<repository location="https://colja-dev.github.io/updatesite/nightly/dfdconverter"/>
 			<unit id="mdpa.gdpr.dfdconverter.feature.feature.group" version="0.0.0"/>
 		</location>
 		<location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="false" type="InstallableUnit">
