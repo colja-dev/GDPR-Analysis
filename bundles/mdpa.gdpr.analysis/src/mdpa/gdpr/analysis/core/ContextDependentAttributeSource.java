@@ -5,7 +5,7 @@ import java.util.List;
 
 import mdpa.gdpr.analysis.utils.UncertaintyUtils;
 import mdpa.gdpr.analysis.dfd.DFDGDPRVertex;
-import mdpa.gdpr.metamodel.GDPR.AbstractGDPRElement;
+import mdpa.laf.referencemodel.LAF.AssessmentFact;
 import mdpa.gdpr.metamodel.contextproperties.Expression;
 import mdpa.gdpr.metamodel.contextproperties.SAFAnnotation;
 import mdpa.gdpr.metamodel.contextproperties.Scope;
@@ -18,7 +18,7 @@ import mdpa.gdpr.metamodel.contextproperties.ScopeSet;
  */
 public class ContextDependentAttributeSource {
     private final String name;
-    private final AbstractGDPRElement annotatedElement;
+    private final AssessmentFact annotatedElement;
     private final ScopeDependentAssessmentFact scopeDependentAssessmentFact;
     private final List<ContextDependentAttributeScenario> contextDependentAttributeScenarios;
 
@@ -125,10 +125,10 @@ public class ContextDependentAttributeSource {
     }
 
     /**
-     * Returns the {@link AbstractGDPRElement} the source is annotated to
-     * @return Annotated {@link AbstractGDPRElement}
+     * Returns the {@link AssessmentFact} the source is annotated to
+     * @return Annotated {@link AssessmentFact}
      */
-    public AbstractGDPRElement getAnnotatedElement() {
+    public AssessmentFact getAnnotatedElement() {
         return annotatedElement;
     }
 

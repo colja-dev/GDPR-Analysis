@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import mdpa.gdpr.analysis.core.ContextDependentAttributeScenario;
-import mdpa.gdpr.metamodel.GDPR.AbstractGDPRElement;
+import mdpa.laf.referencemodel.LAF.AssessmentFact;
 import mdpa.gdpr.metamodel.GDPR.Data;
 import mdpa.gdpr.metamodel.GDPR.LegalBasis;
 import mdpa.gdpr.metamodel.GDPR.Processing;
@@ -18,7 +18,8 @@ import org.dataflowanalysis.dfd.dataflowdiagram.Node;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 
 public class DFDGDPRVertex extends DFDVertex {
-    private final List<AbstractGDPRElement> relatedElements;
+    private final Processing processing;
+    private final List<AssessmentFact> relatedElements;
     private List<ContextDependentAttributeScenario> contextDependentAttributes;
 
     /**
@@ -27,9 +28,13 @@ public class DFDGDPRVertex extends DFDVertex {
      * @param pinDFDVertexMap Map containing relationships between the pins of the vertex and previous vertices
      * @param pinFlowMap Map containing relationships between the pins of the vertex and the flows connecting the node to
      * other vertices
+     * @param processing {@link Processing} of the GDPR model that is represented by the vertex
+     * @param relatedElements All elements of the GDPR model that are related to the processing of the vertex
      */
-    public DFDGDPRVertex(Node node, Map<Pin, DFDVertex> pinDFDVertexMap, Map<Pin, Flow> pinFlowMap, List<AbstractGDPRElement> relatedElements) {
+    public DFDGDPRVertex(Node node, Map<Pin, DFDVertex> pinDFDVertexMap, Map<Pin, Flow> pinFlowMap, Processing processing,
+            List<AssessmentFact> relatedElements) {
         super(node, pinDFDVertexMap, pinFlowMap);
+        this.processing = processing;
         this.relatedElements = relatedElements;
         this.contextDependentAttributes = new ArrayList<>();
     }
@@ -40,7 +45,7 @@ public class DFDGDPRVertex extends DFDVertex {
     public DFDGDPRVertex copy(Map<DFDVertex, DFDVertex> mapping) {
         Map<Pin, DFDVertex> copiedPinDFDVertexMap = this.copyPinDFDVertexMap(mapping);
         Map<Pin, Flow> copiedPinFlowMap = this.copyPinFlowMap(copiedPinDFDVertexMap);
-        DFDGDPRVertex copy = new DFDGDPRVertex(this.referencedElement, copiedPinDFDVertexMap, copiedPinFlowMap,
+        DFDGDPRVertex copy = new DFDGDPRVertex(this.referencedElement, copiedPinDFDVertexMap, copiedPinFlowMap, this.processing,
                 new ArrayList<>(this.relatedElements));
         if (!this.contextDependentAttributes.isEmpty()) {
             copy.setContextDependentAttributes(this.contextDependentAttributes);
@@ -90,44 +95,31 @@ public class DFDGDPRVertex extends DFDVertex {
         return this.contextDependentAttributes;
     }
 
-    public List<AbstractGDPRElement> getRelatedElements() {
+    public List<AssessmentFact> getRelatedElements() {
         return this.relatedElements;
     }
 
+    public Processing getProcessing() {
+        return this.processing;
+    }
+
     public List<Data> getIncomingData() {
-        return this.relatedElements.stream()
-                .filter(Data.class::isInstance)
-                .map(Data.class::cast)
-                .toList();
+        return this.processing.getInputData();
     }
 
     public List<Data> getOutgoingData() {
-        return this.relatedElements.stream()
-                .filter(Data.class::isInstance)
-                .map(Data.class::cast)
-                .toList();
+        return this.processing.getOutputData();
     }
 
     public List<Purpose> getPurpose() {
-        return this.relatedElements.stream()
-                .filter(Purpose.class::isInstance)
-                .map(Purpose.class::cast)
-                .toList();
+        return this.processing.getPurpose();
     }
 
     public List<LegalBasis> getLegalBasis() {
-        return this.relatedElements.stream()
-                .filter(LegalBasis.class::isInstance)
-                .map(LegalBasis.class::cast)
-                .toList();
+        return this.processing.getOnTheBasisOf();
     }
 
     public Role getResponsibilityRole() {
-        return this.relatedElements.stream()
-                .filter(Processing.class::isInstance)
-                .map(Processing.class::cast)
-                .map(Processing::getResponsible)
-                .findAny()
-                .orElseThrow();
+        return this.processing.getResponsible();
     }
 }

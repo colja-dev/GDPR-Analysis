@@ -9,7 +9,7 @@ import java.util.Map;
 import mdpa.gdpr.analysis.core.ContextDependentAttributeSource;
 import mdpa.gdpr.analysis.resource.DataFlowDiagramAndDataDictionary;
 import mdpa.gdpr.analysis.resource.GDPRResourceProvider;
-import mdpa.gdpr.metamodel.GDPR.AbstractGDPRElement;
+import mdpa.laf.referencemodel.LAF.AssessmentFact;
 import mdpa.gdpr.metamodel.GDPR.PersonalData;
 import mdpa.gdpr.metamodel.GDPR.Processing;
 import mdpa.gdpr.metamodel.GDPR.Role;
@@ -157,7 +157,7 @@ public class DFDGDPRFlowGraphCollection extends FlowGraphCollection {
                 .filter(it -> it.getValue() instanceof DFDGDPRVertex)
                 .filter(it -> roleVertices.contains(it.getValue()))
                 .forEach(it -> pinVertexMap.put(it.getKey(), this.getMappingForSink((DFDGDPRVertex) it.getValue(), roleVertices)));
-        return new DFDGDPRVertex(sink.getReferencedElement(), pinVertexMap, new HashMap<>(sink.getPinFlowMap()),
+        return new DFDGDPRVertex(sink.getReferencedElement(), pinVertexMap, new HashMap<>(sink.getPinFlowMap()), sink.getProcessing(),
                 new ArrayList<>(sink.getRelatedElements()));
     }
 
@@ -172,7 +172,7 @@ public class DFDGDPRFlowGraphCollection extends FlowGraphCollection {
             this.logger.error("Resource provider is not a GDPR resource provider!");
             throw new IllegalArgumentException();
         }
-        AbstractGDPRElement gdprElement = gdprResourceProvider.getTransformationManager()
+        Processing processing = gdprResourceProvider.getTransformationManager()
                 .getElement(vertex.getReferencedElement())
                 .orElseThrow();
         Map<Pin, DFDVertex> copiedPinDFDVertexMap = new HashMap<>();
@@ -182,17 +182,18 @@ public class DFDGDPRFlowGraphCollection extends FlowGraphCollection {
                         .get(key),
                         this.getDFDGDPRVertex(vertex.getPinDFDVertexMap()
                                 .get(key), mapping))));
-        List<AbstractGDPRElement> relatedElements = this.determineRelatedElements(gdprElement);
-        return new DFDGDPRVertex(vertex.getReferencedElement(), copiedPinDFDVertexMap, new HashMap<>(vertex.getPinFlowMap()), relatedElements);
+        List<AssessmentFact> relatedElements = this.determineRelatedElements(processing);
+        return new DFDGDPRVertex(vertex.getReferencedElement(), copiedPinDFDVertexMap, new HashMap<>(vertex.getPinFlowMap()), processing,
+                relatedElements);
     }
 
     /**
-     * Determines the relevant elements for the given {@link AbstractGDPRElement}
-     * @param gdprElement Given {@link AbstractGDPRElement}
-     * @return Related elements for the given {@link AbstractGDPRElement}
+     * Determines the relevant elements for the given {@link AssessmentFact}
+     * @param gdprElement Given {@link AssessmentFact}
+     * @return Related elements for the given {@link AssessmentFact}
      */
-    private List<AbstractGDPRElement> determineRelatedElements(AbstractGDPRElement gdprElement) {
-        List<AbstractGDPRElement> result = new ArrayList<>();
+    private List<AssessmentFact> determineRelatedElements(AssessmentFact gdprElement) {
+        List<AssessmentFact> result = new ArrayList<>();
         result.add(gdprElement);
         if (gdprElement instanceof Processing processing) {
             result.addAll(processing.getInputData());

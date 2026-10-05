@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="ASCII"?>
 <GDPR:LegalAssessmentFacts xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:GDPR="http://www.example.org/GDPR" id="_8an00L6BEe6fAKdvyu1GEg">
-  <processing id="_Q0i7U76CEe6fAKdvyu1GEg" entityName="view" followingProcessing="_U27Lor6CEe6fAKdvyu1GEg"/>
-  <processing id="_TFmX876CEe6fAKdvyu1GEg" entityName="display" followingProcessing="_YRN4gb6TEe6fAKdvyu1GEg"/>
-  <processing xsi:type="GDPR:Storing" id="_U27Lor6CEe6fAKdvyu1GEg" entityName="DatabaseReceiving"/>
-  <processing xsi:type="GDPR:Storing" id="_t70R4sBCEe62ZOq30ePU7Q" entityName="DatabaseSending" followingProcessing="_TFmX876CEe6fAKdvyu1GEg"/>
-  <processing id="_Y50ZU76CEe6fAKdvyu1GEg" entityName="buy" followingProcessing="_aPLpw76CEe6fAKdvyu1GEg"/>
-  <processing id="_aPLpw76CEe6fAKdvyu1GEg" entityName="process" followingProcessing="_basao76CEe6fAKdvyu1GEg"/>
-  <processing id="_basao76CEe6fAKdvyu1GEg" entityName="encrypt" followingProcessing="_U27Lor6CEe6fAKdvyu1GEg"/>
-  <processing xsi:type="GDPR:Collecting" id="_LX33QL6CEe6fAKdvyu1GEg" entityName="UserRequesting" followingProcessing="_Q0i7U76CEe6fAKdvyu1GEg"/>
-  <processing xsi:type="GDPR:Collecting" id="_YRN4gb6TEe6fAKdvyu1GEg" entityName="UserReceiving"/>
-  <processing xsi:type="GDPR:Collecting" id="_bmXPYb6TEe6fAKdvyu1GEg" entityName="UserBuying" followingProcessing="_Y50ZU76CEe6fAKdvyu1GEg"/>
+  <actions xsi:type="GDPR:Processing" id="_Q0i7U76CEe6fAKdvyu1GEg" entityName="view" followingProcessing="_U27Lor6CEe6fAKdvyu1GEg"/>
+  <actions xsi:type="GDPR:Processing" id="_TFmX876CEe6fAKdvyu1GEg" entityName="display" followingProcessing="_YRN4gb6TEe6fAKdvyu1GEg"/>
+  <actions xsi:type="GDPR:Storing" id="_U27Lor6CEe6fAKdvyu1GEg" entityName="DatabaseReceiving"/>
+  <actions xsi:type="GDPR:Storing" id="_t70R4sBCEe62ZOq30ePU7Q" entityName="DatabaseSending" followingProcessing="_TFmX876CEe6fAKdvyu1GEg"/>
+  <actions xsi:type="GDPR:Processing" id="_Y50ZU76CEe6fAKdvyu1GEg" entityName="buy" followingProcessing="_aPLpw76CEe6fAKdvyu1GEg"/>
+  <actions xsi:type="GDPR:Processing" id="_aPLpw76CEe6fAKdvyu1GEg" entityName="process" followingProcessing="_basao76CEe6fAKdvyu1GEg"/>
+  <actions xsi:type="GDPR:Processing" id="_basao76CEe6fAKdvyu1GEg" entityName="encrypt" followingProcessing="_U27Lor6CEe6fAKdvyu1GEg"/>
+  <actions xsi:type="GDPR:Collecting" id="_LX33QL6CEe6fAKdvyu1GEg" entityName="UserRequesting" followingProcessing="_Q0i7U76CEe6fAKdvyu1GEg"/>
+  <actions xsi:type="GDPR:Collecting" id="_YRN4gb6TEe6fAKdvyu1GEg" entityName="UserReceiving"/>
+  <actions xsi:type="GDPR:Collecting" id="_bmXPYb6TEe6fAKdvyu1GEg" entityName="UserBuying" followingProcessing="_Y50ZU76CEe6fAKdvyu1GEg"/>
 </GDPR:LegalAssessmentFacts>

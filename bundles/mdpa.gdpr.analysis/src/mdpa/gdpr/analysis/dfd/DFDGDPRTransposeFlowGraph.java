@@ -354,7 +354,7 @@ public class DFDGDPRTransposeFlowGraph extends DFDTransposeFlowGraph {
                 .forEach(key -> copiedPinDFDVertexMap.put(key, vertex.getPinDFDVertexMap()
                         .get(key)
                         .copy(new HashMap<>())));
-        return new DFDGDPRVertex(replacingElement, copiedPinDFDVertexMap, new HashMap<>(vertex.getPinFlowMap()),
+        return new DFDGDPRVertex(replacingElement, copiedPinDFDVertexMap, new HashMap<>(vertex.getPinFlowMap()), vertex.getProcessing(),
                 new ArrayList<>(vertex.getRelatedElements()));
     }
 

@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <GDPR:LegalAssessmentFacts xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:GDPR="http://www.example.org/GDPR" id="_7DeNoP8AEe2kDemF2aGupQ">
-  <processing xsi:type="GDPR:Collecting" id="_0854cQhKEe67tpwR5G7Ipg" entityName="RegisterCustomer" outputData="_txHKtwhLEe67tpwR5G7Ipg" purpose="_DHrfpQhMEe67tpwR5G7Ipg _JSxI5QhMEe67tpwR5G7Ipg" onTheBasisOf="_kdCh2whMEe67tpwR5G7Ipg" followingProcessing="_6JfSEAhKEe67tpwR5G7Ipg _XxG3NAhLEe67tpwR5G7Ipg" responsible="_UvHiUQhKEe67tpwR5G7Ipg"/>
-  <processing id="_6JfSEAhKEe67tpwR5G7Ipg" entityName="Pseudonymization" inputData="_txHKtwhLEe67tpwR5G7Ipg" outputData="_4g-mtwhLEe67tpwR5G7Ipg" purpose="_JSxI5QhMEe67tpwR5G7Ipg" onTheBasisOf="_kdCh2whMEe67tpwR5G7Ipg" followingProcessing="_AJYX8ghLEe67tpwR5G7Ipg" responsible="_UvHiUQhKEe67tpwR5G7Ipg"/>
-  <processing xsi:type="GDPR:Transferring" id="_AJYX8ghLEe67tpwR5G7Ipg" entityName="TransferToStatisticsProvider" inputData="_4g-mtwhLEe67tpwR5G7Ipg" outputData="_4g-mtwhLEe67tpwR5G7Ipg" purpose="_JSxI5QhMEe67tpwR5G7Ipg" onTheBasisOf="_kdCh2whMEe67tpwR5G7Ipg" followingProcessing="_cWKWwwhLEe67tpwR5G7Ipg" responsible="_UvHiUQhKEe67tpwR5G7Ipg"/>
-  <processing xsi:type="GDPR:Storing" id="_XxG3NAhLEe67tpwR5G7Ipg" entityName="BankStoreCustomerData" inputData="_txHKtwhLEe67tpwR5G7Ipg" purpose="_DHrfpQhMEe67tpwR5G7Ipg" onTheBasisOf="_kdCh2whMEe67tpwR5G7Ipg" responsible="_UvHiUQhKEe67tpwR5G7Ipg"/>
-  <processing xsi:type="GDPR:Usage" id="_cWKWwwhLEe67tpwR5G7Ipg" entityName="StatisticsProviderCalculateStatistics" inputData="_4g-mtwhLEe67tpwR5G7Ipg" outputData="_4g-mtwhLEe67tpwR5G7Ipg" purpose="_JSxI5QhMEe67tpwR5G7Ipg" onTheBasisOf="_kdCh2whMEe67tpwR5G7Ipg" followingProcessing="_fQEjJAhLEe67tpwR5G7Ipg" responsible="_tAgprghKEe67tpwR5G7Ipg"/>
-  <processing xsi:type="GDPR:Storing" id="_fQEjJAhLEe67tpwR5G7Ipg" entityName="StatisticsProviderStoreData" inputData="_4g-mtwhLEe67tpwR5G7Ipg" purpose="_JSxI5QhMEe67tpwR5G7Ipg" onTheBasisOf="_kdCh2whMEe67tpwR5G7Ipg" responsible="_tAgprghKEe67tpwR5G7Ipg"/>
-  <purposes id="_DHrfpQhMEe67tpwR5G7Ipg" entityName="CreateAccount"/>
-  <purposes id="_JSxI5QhMEe67tpwR5G7Ipg" entityName="CreateStatistics"/>
-  <data xsi:type="GDPR:PersonalData" id="_txHKtwhLEe67tpwR5G7Ipg" entityName="CustomerBankData" dataReferences="_vnprDAhKEe67tpwR5G7Ipg"/>
-  <data xsi:type="GDPR:PersonalData" id="_4g-mtwhLEe67tpwR5G7Ipg" entityName="PseudonymizedCustomerBankData" dataReferences="_vnprDAhKEe67tpwR5G7Ipg"/>
-  <legalBases xsi:type="GDPR:PerformanceOfContract" id="_Z2O7NAhMEe67tpwR5G7Ipg" entityName="AccountContract" personalData="_txHKtwhLEe67tpwR5G7Ipg" forPurpose="_DHrfpQhMEe67tpwR5G7Ipg" contractingParty="_vnprDAhKEe67tpwR5G7Ipg _UvHiUQhKEe67tpwR5G7Ipg"/>
-  <legalBases xsi:type="GDPR:Consent" id="_kdCh2whMEe67tpwR5G7Ipg" entityName="StatisticsConsent" personalData="_txHKtwhLEe67tpwR5G7Ipg" forPurpose="_JSxI5QhMEe67tpwR5G7Ipg" consentee="_vnprDAhKEe67tpwR5G7Ipg"/>
-  <involvedParties xsi:type="GDPR:Controller" id="_UvHiUQhKEe67tpwR5G7Ipg" entityName="Bank" name="Bank"/>
-  <involvedParties xsi:type="GDPR:ThirdParty" id="_tAgprghKEe67tpwR5G7Ipg" entityName="StatisticsProvider" name="StatisticsProvider"/>
-  <involvedParties xsi:type="GDPR:NaturalPerson" id="_vnprDAhKEe67tpwR5G7Ipg" entityName="Customer" name="Customer"/>
+  <actions xsi:type="GDPR:Collecting" id="_0854cQhKEe67tpwR5G7Ipg" entityName="RegisterCustomer" outputData="_txHKtwhLEe67tpwR5G7Ipg" purpose="_DHrfpQhMEe67tpwR5G7Ipg _JSxI5QhMEe67tpwR5G7Ipg" onTheBasisOf="_kdCh2whMEe67tpwR5G7Ipg" followingProcessing="_6JfSEAhKEe67tpwR5G7Ipg _XxG3NAhLEe67tpwR5G7Ipg" responsible="_UvHiUQhKEe67tpwR5G7Ipg"/>
+  <actions xsi:type="GDPR:Processing" id="_6JfSEAhKEe67tpwR5G7Ipg" entityName="Pseudonymization" inputData="_txHKtwhLEe67tpwR5G7Ipg" outputData="_4g-mtwhLEe67tpwR5G7Ipg" purpose="_JSxI5QhMEe67tpwR5G7Ipg" onTheBasisOf="_kdCh2whMEe67tpwR5G7Ipg" followingProcessing="_AJYX8ghLEe67tpwR5G7Ipg" responsible="_UvHiUQhKEe67tpwR5G7Ipg"/>
+  <actions xsi:type="GDPR:Transferring" id="_AJYX8ghLEe67tpwR5G7Ipg" entityName="TransferToStatisticsProvider" inputData="_4g-mtwhLEe67tpwR5G7Ipg" outputData="_4g-mtwhLEe67tpwR5G7Ipg" purpose="_JSxI5QhMEe67tpwR5G7Ipg" onTheBasisOf="_kdCh2whMEe67tpwR5G7Ipg" followingProcessing="_cWKWwwhLEe67tpwR5G7Ipg" responsible="_UvHiUQhKEe67tpwR5G7Ipg"/>
+  <actions xsi:type="GDPR:Storing" id="_XxG3NAhLEe67tpwR5G7Ipg" entityName="BankStoreCustomerData" inputData="_txHKtwhLEe67tpwR5G7Ipg" purpose="_DHrfpQhMEe67tpwR5G7Ipg" onTheBasisOf="_kdCh2whMEe67tpwR5G7Ipg" responsible="_UvHiUQhKEe67tpwR5G7Ipg"/>
+  <actions xsi:type="GDPR:Usage" id="_cWKWwwhLEe67tpwR5G7Ipg" entityName="StatisticsProviderCalculateStatistics" inputData="_4g-mtwhLEe67tpwR5G7Ipg" outputData="_4g-mtwhLEe67tpwR5G7Ipg" purpose="_JSxI5QhMEe67tpwR5G7Ipg" onTheBasisOf="_kdCh2whMEe67tpwR5G7Ipg" followingProcessing="_fQEjJAhLEe67tpwR5G7Ipg" responsible="_tAgprghKEe67tpwR5G7Ipg"/>
+  <actions xsi:type="GDPR:Storing" id="_fQEjJAhLEe67tpwR5G7Ipg" entityName="StatisticsProviderStoreData" inputData="_4g-mtwhLEe67tpwR5G7Ipg" purpose="_JSxI5QhMEe67tpwR5G7Ipg" onTheBasisOf="_kdCh2whMEe67tpwR5G7Ipg" responsible="_tAgprghKEe67tpwR5G7Ipg"/>
+  <context xsi:type="GDPR:Purpose" id="_DHrfpQhMEe67tpwR5G7Ipg" entityName="CreateAccount"/>
+  <context xsi:type="GDPR:Purpose" id="_JSxI5QhMEe67tpwR5G7Ipg" entityName="CreateStatistics"/>
+  <objects xsi:type="GDPR:PersonalData" id="_txHKtwhLEe67tpwR5G7Ipg" entityName="CustomerBankData" dataReferences="_vnprDAhKEe67tpwR5G7Ipg"/>
+  <objects xsi:type="GDPR:PersonalData" id="_4g-mtwhLEe67tpwR5G7Ipg" entityName="PseudonymizedCustomerBankData" dataReferences="_vnprDAhKEe67tpwR5G7Ipg"/>
+  <context xsi:type="GDPR:PerformanceOfContract" id="_Z2O7NAhMEe67tpwR5G7Ipg" entityName="AccountContract" personalData="_txHKtwhLEe67tpwR5G7Ipg" forPurpose="_DHrfpQhMEe67tpwR5G7Ipg" contractingParty="_UvHiUQhKEe67tpwR5G7Ipg"/>
+  <context xsi:type="GDPR:Consent" id="_kdCh2whMEe67tpwR5G7Ipg" entityName="StatisticsConsent" personalData="_txHKtwhLEe67tpwR5G7Ipg" forPurpose="_JSxI5QhMEe67tpwR5G7Ipg" consentee="_vnprDAhKEe67tpwR5G7Ipg"/>
+  <subjects xsi:type="GDPR:Controller" id="_UvHiUQhKEe67tpwR5G7Ipg" entityName="Bank" name="Bank"/>
+  <subjects xsi:type="GDPR:ThirdParty" id="_tAgprghKEe67tpwR5G7Ipg" entityName="StatisticsProvider" name="StatisticsProvider"/>
+  <context xsi:type="GDPR:NaturalPerson" id="_vnprDAhKEe67tpwR5G7Ipg" entityName="Customer" name="Customer"/>
 </GDPR:LegalAssessmentFacts>

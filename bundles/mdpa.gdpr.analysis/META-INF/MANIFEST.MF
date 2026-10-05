@@ -5,7 +5,7 @@ Bundle-SymbolicName: mdpa.gdpr.analysis
 Bundle-Version: 1.0.0.qualifier
 Export-Package: mdpa.gdpr.analysis,
  mdpa.gdpr.analysis.core,
- mdpa.gdpr.analysis.core.resource,
+ mdpa.gdpr.analysis.resource,
  mdpa.gdpr.analysis.dfd
 Import-Package: org.antlr.runtime;version="3.2.0",
  org.eclipse.xtext.parser.antlr

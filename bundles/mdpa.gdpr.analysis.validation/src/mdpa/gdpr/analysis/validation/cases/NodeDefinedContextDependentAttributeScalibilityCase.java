@@ -5,9 +5,9 @@ import java.util.List;
 import mdpa.gdpr.analysis.validation.AnalysisExecutor;
 import mdpa.gdpr.analysis.validation.GDPRModelBuilder;
 import mdpa.gdpr.analysis.validation.ScalibilityParameter;
-import mdpa.gdpr.metamodel.contextproperties.ContextAnnotation;
-import mdpa.gdpr.metamodel.contextproperties.Property;
-import mdpa.gdpr.metamodel.contextproperties.PropertyAnnotation;
+import mdpa.gdpr.metamodel.contextproperties.ScopeSet;
+import mdpa.gdpr.metamodel.contextproperties.ScopeDependentAssessmentFact;
+import mdpa.gdpr.metamodel.contextproperties.SAFAnnotation;
 
 public class NodeDefinedContextDependentAttributeScalibilityCase extends AbstractScalibilityCase {
 
@@ -22,9 +22,9 @@ public class NodeDefinedContextDependentAttributeScalibilityCase extends Abstrac
         for (int i = 0; i < parameter.getModelSize(); i++) {
             values.add("Value" + i);
         }
-        Property property = builder.createProperty("Type", values);
-        PropertyAnnotation propertyAnnotation = builder.createPropertyAnnotation(builder.getFirstElement(), property);
-        ContextAnnotation contextAnnotation = builder.createContextAnnotation("Annotation", property.getPropertyvalue(), propertyAnnotation);
+        ScopeDependentAssessmentFact property = builder.createProperty("Type", values);
+        SAFAnnotation propertyAnnotation = builder.createPropertyAnnotation(builder.getFirstElement(), property);
+        ScopeSet contextAnnotation = builder.createContextAnnotation("Annotation", property.getExpression(), propertyAnnotation);
         builder.createContextDefinition("Definition", builder.getDefaultController(), contextAnnotation);
 
         // ------------ Analysis Execution ------------------

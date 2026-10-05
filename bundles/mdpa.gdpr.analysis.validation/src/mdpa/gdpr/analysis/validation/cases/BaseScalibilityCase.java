@@ -5,10 +5,10 @@ import mdpa.gdpr.analysis.validation.AnalysisExecutor;
 import mdpa.gdpr.analysis.validation.GDPRModelBuilder;
 import mdpa.gdpr.analysis.validation.ScalibilityParameter;
 import mdpa.gdpr.metamodel.GDPR.Storing;
-import mdpa.gdpr.metamodel.contextproperties.ContextAnnotation;
-import mdpa.gdpr.metamodel.contextproperties.ContextDefinition;
-import mdpa.gdpr.metamodel.contextproperties.Property;
-import mdpa.gdpr.metamodel.contextproperties.PropertyAnnotation;
+import mdpa.gdpr.metamodel.contextproperties.ScopeSet;
+import mdpa.gdpr.metamodel.contextproperties.Scope;
+import mdpa.gdpr.metamodel.contextproperties.ScopeDependentAssessmentFact;
+import mdpa.gdpr.metamodel.contextproperties.SAFAnnotation;
 
 public class BaseScalibilityCase extends AbstractScalibilityCase {
 
@@ -19,11 +19,11 @@ public class BaseScalibilityCase extends AbstractScalibilityCase {
         Storing storing = builder.createStoringElement("Storing");
 
         // -------- Context Dependent Attribute -------------------
-        Property property = builder.createProperty("Type", List.of("True", "False"));
-        PropertyAnnotation propertyAnnotation = builder.createPropertyAnnotation(storing, property);
-        ContextAnnotation contextAnnotation = builder.createContextAnnotation("Annotation", List.of(property.getPropertyvalue()
+        ScopeDependentAssessmentFact property = builder.createProperty("Type", List.of("True", "False"));
+        SAFAnnotation propertyAnnotation = builder.createPropertyAnnotation(storing, property);
+        ScopeSet contextAnnotation = builder.createContextAnnotation("Annotation", List.of(property.getExpression()
                 .get(0)), propertyAnnotation);
-        ContextDefinition contextDefinition = builder.createContextDefinition("Definition", builder.getDefaultController(), contextAnnotation);
+        Scope contextDefinition = builder.createContextDefinition("Definition", builder.getDefaultController(), contextAnnotation);
 
         // ------------ Analysis Execution ------------------
         analysisExecutor.executeAnalysis(parameter, builder);

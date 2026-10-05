@@ -3,18 +3,19 @@ package mdpa.gdpr.analysis.validation;
 import java.util.List;
 import java.util.UUID;
 import mdpa.gdpr.metamodel.GDPR.*;
-import mdpa.gdpr.metamodel.contextproperties.ContextAnnotation;
-import mdpa.gdpr.metamodel.contextproperties.ContextDefinition;
-import mdpa.gdpr.metamodel.contextproperties.ContextDependentProperties;
+import mdpa.gdpr.metamodel.contextproperties.ScopeSet;
+import mdpa.gdpr.metamodel.contextproperties.Scope;
+import mdpa.gdpr.metamodel.contextproperties.ScopeDependentAssessmentFacts;
 import mdpa.gdpr.metamodel.contextproperties.ContextpropertiesFactory;
-import mdpa.gdpr.metamodel.contextproperties.GDPRContextElement;
-import mdpa.gdpr.metamodel.contextproperties.Property;
-import mdpa.gdpr.metamodel.contextproperties.PropertyAnnotation;
-import mdpa.gdpr.metamodel.contextproperties.PropertyValue;
+import mdpa.gdpr.metamodel.contextproperties.LAFScopeElement;
+import mdpa.gdpr.metamodel.contextproperties.ScopeDependentAssessmentFact;
+import mdpa.gdpr.metamodel.contextproperties.SAFAnnotation;
+import mdpa.gdpr.metamodel.contextproperties.Expression;
+import mdpa.laf.referencemodel.LAF.AssessmentFact;
 
 public class GDPRModelBuilder {
     private final LegalAssessmentFacts gdprModel;
-    private final ContextDependentProperties contextDependentAttributes;
+    private final ScopeDependentAssessmentFacts contextDependentAttributes;
 
     private Processing lastElement;
     private final Processing firstElement;
@@ -26,7 +27,7 @@ public class GDPRModelBuilder {
 
     public GDPRModelBuilder() {
         this.gdprModel = GDPRFactory.eINSTANCE.createLegalAssessmentFacts();
-        this.contextDependentAttributes = ContextpropertiesFactory.eINSTANCE.createContextDependentProperties();
+        this.contextDependentAttributes = ContextpropertiesFactory.eINSTANCE.createScopeDependentAssessmentFacts();
         this.defaultController = this.createController("Default Controller");
         this.defaultPurpose = this.createPurpose("Default Purpose");
         this.defaultNaturalPerson = this.createNaturalPerson("Default Natural Person");
@@ -42,7 +43,7 @@ public class GDPRModelBuilder {
                 .add(this.defaultLegalBasis);
         element.getOutputData()
                 .add(this.defaultPersonalData);
-        gdprModel.getProcessing()
+        gdprModel.getActions()
                 .add(element);
         this.firstElement = element;
         this.lastElement = element;
@@ -96,7 +97,7 @@ public class GDPRModelBuilder {
                 .add(this.defaultLegalBasis);
         this.lastElement.getFollowingProcessing()
                 .add(element);
-        this.gdprModel.getProcessing()
+        this.gdprModel.getActions()
                 .add(element);
         this.lastElement = element;
     }
@@ -106,7 +107,7 @@ public class GDPRModelBuilder {
         role.setName(name);
         role.setEntityName(name);
         role.setId(String.valueOf(UUID.randomUUID()));
-        this.gdprModel.getInvolvedParties()
+        this.gdprModel.getSubjects()
                 .add(role);
         return role;
     }
@@ -115,7 +116,7 @@ public class GDPRModelBuilder {
         Purpose purpose = GDPRFactory.eINSTANCE.createPurpose();
         purpose.setEntityName(name);
         purpose.setId(String.valueOf(UUID.randomUUID()));
-        this.gdprModel.getPurposes()
+        this.gdprModel.getContext()
                 .add(purpose);
         return purpose;
     }
@@ -127,7 +128,7 @@ public class GDPRModelBuilder {
         legalBasis.getForPurpose()
                 .add(purpose);
         legalBasis.setConsentee(consentee);
-        this.gdprModel.getLegalBases()
+        this.gdprModel.getContext()
                 .add(legalBasis);
         return legalBasis;
     }
@@ -137,7 +138,7 @@ public class GDPRModelBuilder {
         naturalPerson.setName(name);
         naturalPerson.setEntityName(name);
         naturalPerson.setId(String.valueOf(UUID.randomUUID()));
-        this.gdprModel.getInvolvedParties()
+        this.gdprModel.getContext()
                 .add(naturalPerson);
         return naturalPerson;
     }
@@ -148,79 +149,79 @@ public class GDPRModelBuilder {
         personalData.setId(String.valueOf(UUID.randomUUID()));
         personalData.getDataReferences()
                 .add(naturalPerson);
-        this.gdprModel.getData()
+        this.gdprModel.getObjects()
                 .add(personalData);
         return personalData;
     }
 
-    public Property createProperty(String name, List<String> values) {
-        Property property = ContextpropertiesFactory.eINSTANCE.createProperty();
+    public ScopeDependentAssessmentFact createProperty(String name, List<String> values) {
+        ScopeDependentAssessmentFact property = ContextpropertiesFactory.eINSTANCE.createScopeDependentAssessmentFact();
         property.setEntityName(name);
         property.setId(String.valueOf(UUID.randomUUID()));
         for (String value : values) {
-            PropertyValue propertyValue = ContextpropertiesFactory.eINSTANCE.createPropertyValue();
-            propertyValue.setParentProperty(property);
+            Expression propertyValue = ContextpropertiesFactory.eINSTANCE.createExpression();
+            propertyValue.setParentAssessmentFact(property);
             propertyValue.setEntityName(value);
             propertyValue.setId(String.valueOf(UUID.randomUUID()));
         }
-        this.contextDependentAttributes.getProperty()
+        this.contextDependentAttributes.getScopeDependentAssessmentFact()
                 .add(property);
         return property;
     }
 
-    public PropertyAnnotation createPropertyAnnotation(AbstractGDPRElement annotatedElement, Property property) {
-        PropertyAnnotation propertyAnnotation = ContextpropertiesFactory.eINSTANCE.createPropertyAnnotation();
+    public SAFAnnotation createPropertyAnnotation(AssessmentFact annotatedElement, ScopeDependentAssessmentFact property) {
+        SAFAnnotation propertyAnnotation = ContextpropertiesFactory.eINSTANCE.createSAFAnnotation();
         propertyAnnotation.setAnnotatedElement(annotatedElement);
-        propertyAnnotation.setProperty(property);
-        this.contextDependentAttributes.getPropertyannotation()
+        propertyAnnotation.setScopeDependentAssessmentFact(property);
+        this.contextDependentAttributes.getSafAnnotation()
                 .add(propertyAnnotation);
         return propertyAnnotation;
     }
 
-    public ContextAnnotation createContextAnnotation(String name, List<PropertyValue> propertyValues, PropertyAnnotation propertyAnnotation) {
-        ContextAnnotation contextAnnotation = ContextpropertiesFactory.eINSTANCE.createContextAnnotation();
+    public ScopeSet createContextAnnotation(String name, List<Expression> propertyValues, SAFAnnotation propertyAnnotation) {
+        ScopeSet contextAnnotation = ContextpropertiesFactory.eINSTANCE.createScopeSet();
         contextAnnotation.setEntityName(name);
         contextAnnotation.setId(String.valueOf(UUID.randomUUID()));
-        contextAnnotation.getPropertyvalue()
+        contextAnnotation.getExpression()
                 .addAll(propertyValues);
-        propertyAnnotation.getContextannotation()
+        propertyAnnotation.getScopeSet()
                 .add(contextAnnotation);
         return contextAnnotation;
     }
 
-    public ContextDefinition createContextDefinition(String name, AbstractGDPRElement requiredElement, ContextAnnotation contextAnnotation) {
-        ContextDefinition contextDefinition = ContextpropertiesFactory.eINSTANCE.createContextDefinition();
+    public Scope createContextDefinition(String name, AssessmentFact requiredElement, ScopeSet contextAnnotation) {
+        Scope contextDefinition = ContextpropertiesFactory.eINSTANCE.createScope();
         contextDefinition.setEntityName(name);
         contextDefinition.setId(String.valueOf(UUID.randomUUID()));
 
-        GDPRContextElement gdprContextElement = ContextpropertiesFactory.eINSTANCE.createGDPRContextElement();
-        gdprContextElement.setGdprElement(requiredElement);
-        contextDefinition.getGdprElements()
+        LAFScopeElement gdprContextElement = ContextpropertiesFactory.eINSTANCE.createLAFScopeElement();
+        gdprContextElement.setLafElement(requiredElement);
+        contextDefinition.getLafScopeElements()
                 .add(gdprContextElement);
 
-        contextAnnotation.getContextdefinition()
+        contextAnnotation.getScope()
                 .add(contextDefinition);
-        this.contextDependentAttributes.getContextdefinition()
+        this.contextDependentAttributes.getScope()
                 .add(contextDefinition);
         return contextDefinition;
     }
 
-    public ContextDefinition createContextDefinition(String name, List<? extends AbstractGDPRElement> requiredElements,
-            ContextAnnotation contextAnnotation) {
-        ContextDefinition contextDefinition = ContextpropertiesFactory.eINSTANCE.createContextDefinition();
+    public Scope createContextDefinition(String name, List<? extends AssessmentFact> requiredElements,
+            ScopeSet contextAnnotation) {
+        Scope contextDefinition = ContextpropertiesFactory.eINSTANCE.createScope();
         contextDefinition.setEntityName(name);
         contextDefinition.setId(String.valueOf(UUID.randomUUID()));
 
-        for (AbstractGDPRElement requiredElement : requiredElements) {
-            GDPRContextElement gdprContextElement = ContextpropertiesFactory.eINSTANCE.createGDPRContextElement();
-            gdprContextElement.setGdprElement(requiredElement);
-            contextDefinition.getGdprElements()
+        for (AssessmentFact requiredElement : requiredElements) {
+            LAFScopeElement gdprContextElement = ContextpropertiesFactory.eINSTANCE.createLAFScopeElement();
+            gdprContextElement.setLafElement(requiredElement);
+            contextDefinition.getLafScopeElements()
                     .add(gdprContextElement);
         }
 
-        contextAnnotation.getContextdefinition()
+        contextAnnotation.getScope()
                 .add(contextDefinition);
-        this.contextDependentAttributes.getContextdefinition()
+        this.contextDependentAttributes.getScope()
                 .add(contextDefinition);
         return contextDefinition;
     }
@@ -249,7 +250,7 @@ public class GDPRModelBuilder {
         return defaultPurpose;
     }
 
-    public ContextDependentProperties getContextDependentAttributes() {
+    public ScopeDependentAssessmentFacts getContextDependentAttributes() {
         return contextDependentAttributes;
     }
 

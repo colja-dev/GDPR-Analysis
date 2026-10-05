@@ -5,7 +5,7 @@ import java.util.List;
 import mdpa.gdpr.analysis.validation.AnalysisExecutor;
 import mdpa.gdpr.analysis.validation.GDPRModelBuilder;
 import mdpa.gdpr.analysis.validation.ScalibilityParameter;
-import mdpa.gdpr.metamodel.contextproperties.Property;
+import mdpa.gdpr.metamodel.contextproperties.ScopeDependentAssessmentFact;
 
 public class DataUndefinedContextDependentAttributeScalibilityCase extends AbstractScalibilityCase {
 
@@ -20,7 +20,7 @@ public class DataUndefinedContextDependentAttributeScalibilityCase extends Abstr
         for (int i = 0; i < parameter.getModelSize(); i++) {
             values.add("Value" + i);
         }
-        Property property = builder.createProperty("Type", values);
+        ScopeDependentAssessmentFact property = builder.createProperty("Type", values);
         builder.createPropertyAnnotation(builder.getDefaultPersonalData(), property);
 
         // ------------ Analysis Execution ------------------
