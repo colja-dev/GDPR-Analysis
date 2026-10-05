@@ -3,14 +3,14 @@ package mdpa.gdpr.analysis.validation;
 import java.util.List;
 import java.util.UUID;
 import mdpa.gdpr.metamodel.GDPR.*;
-import mdpa.gdpr.metamodel.contextproperties.ScopeSet;
-import mdpa.gdpr.metamodel.contextproperties.Scope;
-import mdpa.gdpr.metamodel.contextproperties.ScopeDependentAssessmentFacts;
 import mdpa.gdpr.metamodel.contextproperties.ContextpropertiesFactory;
-import mdpa.gdpr.metamodel.contextproperties.LAFScopeElement;
-import mdpa.gdpr.metamodel.contextproperties.ScopeDependentAssessmentFact;
-import mdpa.gdpr.metamodel.contextproperties.SAFAnnotation;
 import mdpa.gdpr.metamodel.contextproperties.Expression;
+import mdpa.gdpr.metamodel.contextproperties.LAFScopeElement;
+import mdpa.gdpr.metamodel.contextproperties.SAFAnnotation;
+import mdpa.gdpr.metamodel.contextproperties.Scope;
+import mdpa.gdpr.metamodel.contextproperties.ScopeDependentAssessmentFact;
+import mdpa.gdpr.metamodel.contextproperties.ScopeDependentAssessmentFacts;
+import mdpa.gdpr.metamodel.contextproperties.ScopeSet;
 import mdpa.laf.referencemodel.LAF.AssessmentFact;
 
 public class GDPRModelBuilder {
@@ -206,8 +206,7 @@ public class GDPRModelBuilder {
         return contextDefinition;
     }
 
-    public Scope createContextDefinition(String name, List<? extends AssessmentFact> requiredElements,
-            ScopeSet contextAnnotation) {
+    public Scope createContextDefinition(String name, List<? extends AssessmentFact> requiredElements, ScopeSet contextAnnotation) {
         Scope contextDefinition = ContextpropertiesFactory.eINSTANCE.createScope();
         contextDefinition.setEntityName(name);
         contextDefinition.setId(String.valueOf(UUID.randomUUID()));

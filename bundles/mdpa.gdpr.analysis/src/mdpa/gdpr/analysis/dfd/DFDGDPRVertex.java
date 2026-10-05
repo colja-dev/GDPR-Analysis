@@ -5,12 +5,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import mdpa.gdpr.analysis.core.ContextDependentAttributeScenario;
-import mdpa.laf.referencemodel.LAF.AssessmentFact;
 import mdpa.gdpr.metamodel.GDPR.Data;
 import mdpa.gdpr.metamodel.GDPR.LegalBasis;
 import mdpa.gdpr.metamodel.GDPR.Processing;
 import mdpa.gdpr.metamodel.GDPR.Purpose;
 import mdpa.gdpr.metamodel.GDPR.Role;
+import mdpa.laf.referencemodel.LAF.AssessmentFact;
 import org.dataflowanalysis.analysis.dfd.core.DFDVertex;
 import org.dataflowanalysis.dfd.datadictionary.Pin;
 import org.dataflowanalysis.dfd.dataflowdiagram.Flow;
@@ -54,7 +54,8 @@ public class DFDGDPRVertex extends DFDVertex {
     }
 
     /**
-     * Returns the Map from a pin on the vertex to the given predecessor {@link DFDVertex}, while adhering to the given mapping
+     * Returns the Map from a pin on the vertex to the given predecessor {@link DFDVertex}, while adhering to the given
+     * mapping
      * @param mapping Mapping that should be applied to the mapping process
      * @return Returns a new copied pin to vertex map that adheres to the given mapping
      */
@@ -75,13 +76,19 @@ public class DFDGDPRVertex extends DFDVertex {
         Map<Pin, Flow> copiedPinFlowMap = new HashMap<>();
         this.pinFlowMap.keySet()
                 .forEach(key -> {
-                    Pin correspondingPin = pinDFDVertexMap.get(key).getReferencedElement().getBehavior().getOutPin().stream()
-                            .filter(it -> it.getEntityName().equals(key.getEntityName()))
+                    Pin correspondingPin = pinDFDVertexMap.get(key)
+                            .getReferencedElement()
+                            .getBehavior()
+                            .getOutPin()
+                            .stream()
+                            .filter(it -> it.getEntityName()
+                                    .equals(key.getEntityName()))
                             .findAny()
                             .orElseThrow();
                     Flow flow = EcoreUtil.copy(this.pinFlowMap.get(key));
                     flow.setSourcePin(correspondingPin);
-                    flow.setSourceNode(pinDFDVertexMap.get(key).getReferencedElement());
+                    flow.setSourceNode(pinDFDVertexMap.get(key)
+                            .getReferencedElement());
                     copiedPinFlowMap.put(key, flow);
                 });
         return copiedPinFlowMap;

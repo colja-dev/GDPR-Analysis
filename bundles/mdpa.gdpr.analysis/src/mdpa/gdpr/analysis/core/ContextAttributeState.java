@@ -1,11 +1,10 @@
 package mdpa.gdpr.analysis.core;
 
-import mdpa.gdpr.analysis.dfd.DFDGDPRVertex;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
+import mdpa.gdpr.analysis.dfd.DFDGDPRVertex;
 
 /**
  * This class models a state for a {@link mdpa.gdpr.analysis.dfd.DFDGDPRTransposeFlowGraph} that has selected the stored
@@ -50,8 +49,8 @@ public record ContextAttributeState(List<ContextDependentAttributeScenario> sele
     }
 
     /**
-     * Determines whether the context attribute state cannot handle the given vertex.
-     * This is the case, when all stored scenarios cannot be applied to the vertex.
+     * Determines whether the context attribute state cannot handle the given vertex. This is the case, when all stored
+     * scenarios cannot be applied to the vertex.
      * @param vertex Given vertex
      * @return Returns true, if the state cannot handle the vertex. Otherwise, the method returns false.
      */

@@ -1,5 +1,7 @@
 package mdpa.gdpr.analysis.tests.validation;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.util.List;
 import java.util.stream.Collectors;
 import mdpa.gdpr.analysis.core.ContextDependentAttributeScenario;
@@ -11,8 +13,6 @@ import org.dataflowanalysis.analysis.utils.LoggerManager;
 import org.dataflowanalysis.dfd.dataflowdiagram.Node;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 public class TravelPlannerEvaluationTest extends ValidationBase {
     private final Logger logger = LoggerManager.getLogger(TrainModelEvaluationTest.class);
 
@@ -23,12 +23,14 @@ public class TravelPlannerEvaluationTest extends ValidationBase {
     @Test
     public void testFlowGraphAmount() {
         DFDGDPRFlowGraphCollection flowGraphs = (DFDGDPRFlowGraphCollection) this.analysis.findFlowGraphs();
-        assertEquals(1, flowGraphs.getTransposeFlowGraphs().size());
+        assertEquals(1, flowGraphs.getTransposeFlowGraphs()
+                .size());
 
         var alternateFlowGraphs = flowGraphs.resolveContextDependentAttributes();
         logger.info("Number of TFGs: " + alternateFlowGraphs.getTransposeFlowGraphs()
                 .size());
-        assertEquals(2, alternateFlowGraphs.getTransposeFlowGraphs().size());
+        assertEquals(2, alternateFlowGraphs.getTransposeFlowGraphs()
+                .size());
 
         for (var tfg : alternateFlowGraphs.getTransposeFlowGraphs()) {
             var gdprTFG = (DFDGDPRTransposeFlowGraph) tfg;

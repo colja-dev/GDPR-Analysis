@@ -1,5 +1,8 @@
 package mdpa.gdpr.analysis.resource;
 
+import java.io.IOException;
+import java.nio.file.Path;
+import java.util.Map;
 import org.dataflowanalysis.dfd.datadictionary.DataDictionary;
 import org.dataflowanalysis.dfd.dataflowdiagram.DataFlowDiagram;
 import org.eclipse.emf.common.util.URI;
@@ -8,10 +11,6 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.emf.ecore.xmi.impl.XMLResourceFactoryImpl;
-
-import java.io.IOException;
-import java.nio.file.Path;
-import java.util.Map;
 
 /**
  * Contains a full metamodel required to run a DFD-based

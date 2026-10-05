@@ -8,12 +8,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Stream;
-
-import mdpa.gdpr.analysis.utils.DFDUtils;
-import mdpa.gdpr.analysis.utils.UncertaintyUtils;
 import mdpa.gdpr.analysis.core.ContextAttributeState;
 import mdpa.gdpr.analysis.core.ContextDependentAttributeScenario;
 import mdpa.gdpr.analysis.core.ContextDependentAttributeSource;
+import mdpa.gdpr.analysis.utils.DFDUtils;
+import mdpa.gdpr.analysis.utils.UncertaintyUtils;
 import mdpa.gdpr.metamodel.GDPR.Data;
 import mdpa.gdpr.metamodel.GDPR.NaturalPerson;
 import mdpa.gdpr.metamodel.GDPR.PersonalData;
@@ -67,7 +66,8 @@ public class DFDGDPRTransposeFlowGraph extends DFDTransposeFlowGraph {
      */
     public List<DFDGDPRTransposeFlowGraph> determineAlternateFlowGraphs() {
         List<DFDGDPRTransposeFlowGraph> result = new ArrayList<>();
-        List<ContextAttributeState> states = new ArrayList<>(ContextAttributeState.createAllContextAttributeStates(this.relevantContextDependentAttributes));
+        List<ContextAttributeState> states = new ArrayList<>(
+                ContextAttributeState.createAllContextAttributeStates(this.relevantContextDependentAttributes));
         for (ContextAttributeState state : states) {
             result.addAll(this.determineAlternateFlowGraphForState(state));
         }
@@ -91,10 +91,16 @@ public class DFDGDPRTransposeFlowGraph extends DFDTransposeFlowGraph {
 
         for (ContextDependentAttributeScenario scenario : state.selectedScenarios()) {
             var scenarioResult = this.handleScenario(scenario, currentTransposeFlowGraph, state);
-            if (scenarioResult.states().isEmpty()) {
-                currentTransposeFlowGraph = scenarioResult.transposeFlowGraph().orElse(currentTransposeFlowGraph);
+            if (scenarioResult.states()
+                    .isEmpty()) {
+                currentTransposeFlowGraph = scenarioResult.transposeFlowGraph()
+                        .orElse(currentTransposeFlowGraph);
             } else {
-                return scenarioResult.states().stream().map(this::determineAlternateFlowGraphForState).flatMap(List::stream).toList();
+                return scenarioResult.states()
+                        .stream()
+                        .map(this::determineAlternateFlowGraphForState)
+                        .flatMap(List::stream)
+                        .toList();
             }
         }
         return List.of(currentTransposeFlowGraph);
@@ -106,10 +112,11 @@ public class DFDGDPRTransposeFlowGraph extends DFDTransposeFlowGraph {
      * @param scenario {@link ContextDependentAttributeScenario} that is applied to the given transpose flow graph
      * @param currentTransposeFlowGraph Transpose flow graph that is modified
      * @param state {@link ContextAttributeState} that the resulting transpose flow graphs should have
-     * @return Returns a {@link ScenarioResult} either containing new states to be explored, or an alternate flow graph with the applied scenario
+     * @return Returns a {@link ScenarioResult} either containing new states to be explored, or an alternate flow graph with
+     * the applied scenario
      */
-    private ScenarioResult handleScenario(ContextDependentAttributeScenario scenario,
-            DFDGDPRTransposeFlowGraph currentTransposeFlowGraph, ContextAttributeState state) {
+    private ScenarioResult handleScenario(ContextDependentAttributeScenario scenario, DFDGDPRTransposeFlowGraph currentTransposeFlowGraph,
+            ContextAttributeState state) {
         ContextDependentAttributeSource source = scenario.getContextDependentAttributeSource();
         Optional<DFDGDPRVertex> matchingVertex = currentTransposeFlowGraph.getVertices()
                 .stream()
@@ -136,25 +143,34 @@ public class DFDGDPRTransposeFlowGraph extends DFDTransposeFlowGraph {
     }
 
     /**
-     * Handle context dependent attributes to a natural person element that cause a data characteristic to be applied at the given node
-     *
+     * Handle context dependent attributes to a natural person element that cause a data characteristic to be applied at the
+     * given node
      * @param currentTransposeFlowGraph Transpose flow graph that is modified
-     * @param source  {@link ContextDependentAttributeSource} that is applied to the given transpose flow graph
+     * @param source {@link ContextDependentAttributeSource} that is applied to the given transpose flow graph
      * @param scenario {@link ContextDependentAttributeScenario} that is applied to the given transpose flow graph
      * @param state {@link ContextAttributeState} that the resulting transpose flow graphs should have
      * @param person {@link NaturalPerson} element the context dependent attribute is applied to
-     * @return Returns a {@link ScenarioResult} either containing new states to be explored, or an alternate flow graph with the applied scenario
+     * @return Returns a {@link ScenarioResult} either containing new states to be explored, or an alternate flow graph with
+     * the applied scenario
      */
-    private ScenarioResult handlePersonalDataCharacteristicScenario(DFDGDPRTransposeFlowGraph currentTransposeFlowGraph, ContextDependentAttributeSource source, ContextDependentAttributeScenario scenario, ContextAttributeState state, NaturalPerson person) {
+    private ScenarioResult handlePersonalDataCharacteristicScenario(DFDGDPRTransposeFlowGraph currentTransposeFlowGraph,
+            ContextDependentAttributeSource source, ContextDependentAttributeScenario scenario, ContextAttributeState state, NaturalPerson person) {
         List<DFDGDPRVertex> targetedVertices = this.determineTargetedVertices(currentTransposeFlowGraph, scenario);
 
         for (DFDGDPRVertex targetVertex : targetedVertices) {
             if (!source.applicable(targetVertex) && state.doesNotHandle(targetVertex)) {
                 List<ContextAttributeState> additionalStates = new ArrayList<>();
-                ContextDependentAttributeSource additionalSource = new ContextDependentAttributeSource(source.getAnnotation(), source.getScopeDependentAssessmentFact().getExpression(), List.of(source));
-                for (Expression expression : source.getScopeDependentAssessmentFact().getExpression()) {
-                    ContextDependentAttributeScenario additionalScenario = new ContextDependentAttributeScenario(expression, additionalSource, List.of(source));
-                    ContextAttributeState additionalState = new ContextAttributeState(Stream.concat(state.selectedScenarios().stream(), Stream.of(additionalScenario)).toList());
+                ContextDependentAttributeSource additionalSource = new ContextDependentAttributeSource(source.getAnnotation(),
+                        source.getScopeDependentAssessmentFact()
+                                .getExpression(),
+                        List.of(source));
+                for (Expression expression : source.getScopeDependentAssessmentFact()
+                        .getExpression()) {
+                    ContextDependentAttributeScenario additionalScenario = new ContextDependentAttributeScenario(expression, additionalSource,
+                            List.of(source));
+                    ContextAttributeState additionalState = new ContextAttributeState(Stream.concat(state.selectedScenarios()
+                            .stream(), Stream.of(additionalScenario))
+                            .toList());
                     additionalStates.add(additionalState);
                 }
                 logger.warn("Explore with Uncertainty!");
@@ -200,25 +216,34 @@ public class DFDGDPRTransposeFlowGraph extends DFDTransposeFlowGraph {
     }
 
     /**
-     * Handle context dependent attributes to a data element that cause a data characteristic to be applied at the given node
-     *
+     * Handle context dependent attributes to a data element that cause a data characteristic to be applied at the given
+     * node
      * @param currentTransposeFlowGraph Transpose flow graph that is modified
-     * @param source  {@link ContextDependentAttributeSource} that is applied to the given transpose flow graph
+     * @param source {@link ContextDependentAttributeSource} that is applied to the given transpose flow graph
      * @param scenario {@link ContextDependentAttributeScenario} that is applied to the given transpose flow graph
      * @param state {@link ContextAttributeState} that the resulting transpose flow graphs should have
      * @param data {@link Data} data element the context dependent attribute is applied to
-     * @return Returns a {@link ScenarioResult} either containing new states to be explored, or an alternate flow graph with the applied scenario
+     * @return Returns a {@link ScenarioResult} either containing new states to be explored, or an alternate flow graph with
+     * the applied scenario
      */
-    private ScenarioResult handleDataCharacteristicScenario(DFDGDPRTransposeFlowGraph currentTransposeFlowGraph, ContextDependentAttributeSource source, ContextDependentAttributeScenario scenario, ContextAttributeState state, Data data) {
+    private ScenarioResult handleDataCharacteristicScenario(DFDGDPRTransposeFlowGraph currentTransposeFlowGraph,
+            ContextDependentAttributeSource source, ContextDependentAttributeScenario scenario, ContextAttributeState state, Data data) {
         List<DFDGDPRVertex> targetedVertices = this.determineTargetedVertices(currentTransposeFlowGraph, scenario);
 
         for (DFDGDPRVertex targetVertex : targetedVertices) {
             if (!source.applicable(targetVertex) && state.doesNotHandle(targetVertex)) {
                 List<ContextAttributeState> additionalStates = new ArrayList<>();
-                ContextDependentAttributeSource additionalSource = new ContextDependentAttributeSource(source.getAnnotation(), source.getScopeDependentAssessmentFact().getExpression(), List.of(source));
-                for (Expression expression : source.getScopeDependentAssessmentFact().getExpression()) {
-                    ContextDependentAttributeScenario additionalScenario = new ContextDependentAttributeScenario(expression, additionalSource, List.of(source));
-                    ContextAttributeState additionalState = new ContextAttributeState(Stream.concat(state.selectedScenarios().stream(), Stream.of(additionalScenario)).toList());
+                ContextDependentAttributeSource additionalSource = new ContextDependentAttributeSource(source.getAnnotation(),
+                        source.getScopeDependentAssessmentFact()
+                                .getExpression(),
+                        List.of(source));
+                for (Expression expression : source.getScopeDependentAssessmentFact()
+                        .getExpression()) {
+                    ContextDependentAttributeScenario additionalScenario = new ContextDependentAttributeScenario(expression, additionalSource,
+                            List.of(source));
+                    ContextAttributeState additionalState = new ContextAttributeState(Stream.concat(state.selectedScenarios()
+                            .stream(), Stream.of(additionalScenario))
+                            .toList());
                     additionalStates.add(additionalState);
                 }
                 logger.warn("Explore with Uncertainty!");
@@ -261,14 +286,15 @@ public class DFDGDPRTransposeFlowGraph extends DFDTransposeFlowGraph {
 
     /**
      * Handle context dependent attributes that cause a node characteristic to be applied at the given node
-     *
      * @param currentTransposeFlowGraph Transpose flow graph that is modified
-     * @param source  {@link ContextDependentAttributeSource} that is applied to the given transpose flow graph
+     * @param source {@link ContextDependentAttributeSource} that is applied to the given transpose flow graph
      * @param scenario {@link ContextDependentAttributeScenario} that is applied to the given transpose flow graph
      * @param state {@link ContextAttributeState} that the resulting transpose flow graphs should have
-     * @return Returns a {@link ScenarioResult} either containing new states to be explored, or an alternate flow graph with the applied scenario
+     * @return Returns a {@link ScenarioResult} either containing new states to be explored, or an alternate flow graph with
+     * the applied scenario
      */
-    private ScenarioResult handleNodeCharacteristicScenario(DFDGDPRTransposeFlowGraph currentTransposeFlowGraph, ContextDependentAttributeSource source, ContextDependentAttributeScenario scenario, ContextAttributeState state) {
+    private ScenarioResult handleNodeCharacteristicScenario(DFDGDPRTransposeFlowGraph currentTransposeFlowGraph,
+            ContextDependentAttributeSource source, ContextDependentAttributeScenario scenario, ContextAttributeState state) {
         List<String> matchingVertices = currentTransposeFlowGraph.getVertices()
                 .stream()
                 .filter(DFDGDPRVertex.class::isInstance)
@@ -304,7 +330,6 @@ public class DFDGDPRTransposeFlowGraph extends DFDTransposeFlowGraph {
         }
         return new ScenarioResult(Optional.of(currentTransposeFlowGraph), List.of());
     }
-
 
     private List<DFDGDPRVertex> determineTargetedVertices(DFDGDPRTransposeFlowGraph currentTransposeFlowGraph,
             ContextDependentAttributeScenario scenario) {

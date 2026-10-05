@@ -1,5 +1,9 @@
 package mdpa.gdpr.analysis.tests.validation;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import java.util.List;
+import java.util.stream.Collectors;
 import mdpa.gdpr.analysis.core.ContextDependentAttributeScenario;
 import mdpa.gdpr.analysis.dfd.DFDGDPRFlowGraphCollection;
 import mdpa.gdpr.analysis.dfd.DFDGDPRTransposeFlowGraph;
@@ -8,11 +12,6 @@ import org.apache.log4j.Logger;
 import org.dataflowanalysis.analysis.utils.LoggerManager;
 import org.dataflowanalysis.dfd.dataflowdiagram.Node;
 import org.junit.jupiter.api.Test;
-
-import java.util.List;
-import java.util.stream.Collectors;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class TrainModelEvaluationTest extends ValidationBase {
     private Logger logger = LoggerManager.getLogger(TrainModelEvaluationTest.class);
@@ -24,12 +23,14 @@ public class TrainModelEvaluationTest extends ValidationBase {
     @Test
     public void testFlowGraphAmount() {
         DFDGDPRFlowGraphCollection flowGraphs = (DFDGDPRFlowGraphCollection) this.analysis.findFlowGraphs();
-        assertEquals(3, flowGraphs.getTransposeFlowGraphs().size());
+        assertEquals(3, flowGraphs.getTransposeFlowGraphs()
+                .size());
         var alternateFlowGraphs = flowGraphs.resolveContextDependentAttributes();
 
         logger.info("Number of TFGs: " + alternateFlowGraphs.getTransposeFlowGraphs()
                 .size());
-        assertEquals(6, alternateFlowGraphs.getTransposeFlowGraphs().size());
+        assertEquals(6, alternateFlowGraphs.getTransposeFlowGraphs()
+                .size());
         for (var tfg : alternateFlowGraphs.getTransposeFlowGraphs()) {
             var gdprTFG = (DFDGDPRTransposeFlowGraph) tfg;
             System.out.println("---- State: " + gdprTFG.getContextAttributeState() + " -----------");

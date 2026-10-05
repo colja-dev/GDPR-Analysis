@@ -1,9 +1,9 @@
 package mdpa.gdpr.analysis.core;
 
 import java.util.List;
-import mdpa.gdpr.analysis.utils.UncertaintyUtils;
 import mdpa.gdpr.analysis.dfd.DFDGDPRTransposeFlowGraph;
 import mdpa.gdpr.analysis.dfd.DFDGDPRVertex;
+import mdpa.gdpr.analysis.utils.UncertaintyUtils;
 import mdpa.gdpr.metamodel.contextproperties.Expression;
 import mdpa.gdpr.metamodel.contextproperties.Scope;
 import mdpa.gdpr.metamodel.contextproperties.ScopeSet;
@@ -66,7 +66,9 @@ public class ContextDependentAttributeScenario {
      */
     public boolean applicable(DFDGDPRVertex vertex) {
         logger.trace("Determining whether " + this.name + " can be applied to " + vertex);
-        if (!vertex.getRelatedElements().contains(this.contextDependentAttributeSource.getAnnotation().getAnnotatedElement())) {
+        if (!vertex.getRelatedElements()
+                .contains(this.contextDependentAttributeSource.getAnnotation()
+                        .getAnnotatedElement())) {
             logger.trace("Cannot apply " + this.name + " to vertex, as it does not have the needed elements in context!");
             return false;
         }
@@ -76,7 +78,8 @@ public class ContextDependentAttributeScenario {
             }
             logger.trace("Context Dependent Attribute Scenario is resolved with uncertainties!");
             return this.sources.stream()
-                    .map(it -> it.getContextDependentAttributeScenarios().get(0))
+                    .map(it -> it.getContextDependentAttributeScenarios()
+                            .get(0))
                     .noneMatch(it -> it.applicable(vertex));
         }
         return this.scopes.stream()

@@ -2,15 +2,14 @@ package mdpa.gdpr.analysis.core;
 
 import java.util.Collection;
 import java.util.List;
-
-import mdpa.gdpr.analysis.utils.UncertaintyUtils;
 import mdpa.gdpr.analysis.dfd.DFDGDPRVertex;
-import mdpa.laf.referencemodel.LAF.AssessmentFact;
+import mdpa.gdpr.analysis.utils.UncertaintyUtils;
 import mdpa.gdpr.metamodel.contextproperties.Expression;
 import mdpa.gdpr.metamodel.contextproperties.SAFAnnotation;
 import mdpa.gdpr.metamodel.contextproperties.Scope;
 import mdpa.gdpr.metamodel.contextproperties.ScopeDependentAssessmentFact;
 import mdpa.gdpr.metamodel.contextproperties.ScopeSet;
+import mdpa.laf.referencemodel.LAF.AssessmentFact;
 
 /**
  * This class models an application of a context dependent attribute on an element in the GDPR model. The different
@@ -48,14 +47,13 @@ public class ContextDependentAttributeSource {
     /**
      * Creates a new {@link ContextDependentAttributeSource} that needs to be resolved with uncertain CDAs. Resolves an
      * uncertainty regarding the value of an {@link ContextDependentAttributeSource} by creating a scenario for each passed
-     * {@link Expression}. Additionally, the given list of other {@link ContextDependentAttributeSource} denotes where
-     * this source cannot apply
+     * {@link Expression}. Additionally, the given list of other {@link ContextDependentAttributeSource} denotes where this
+     * source cannot apply
      * @param safAnnotation {@link SAFAnnotation} containing information about the annotated element and value
      * @param expressions Different {@link Expression} that are resolved by the uncertainty
      * @param sources List of {@link ContextDependentAttributeSource} that cannot be applied at the same time
      */
-    public ContextDependentAttributeSource(SAFAnnotation safAnnotation, List<Expression> expressions,
-            List<ContextDependentAttributeSource> sources) {
+    public ContextDependentAttributeSource(SAFAnnotation safAnnotation, List<Expression> expressions, List<ContextDependentAttributeSource> sources) {
         this.name = "Unknown@" + safAnnotation.getEntityName();
         this.annotation = safAnnotation;
         this.annotatedElement = safAnnotation.getAnnotatedElement();

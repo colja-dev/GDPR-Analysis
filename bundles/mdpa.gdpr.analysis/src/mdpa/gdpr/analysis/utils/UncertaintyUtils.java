@@ -2,7 +2,6 @@ package mdpa.gdpr.analysis.utils;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import mdpa.gdpr.analysis.core.ContextDependentAttributeScenario;
 import mdpa.gdpr.analysis.core.ContextDependentAttributeSource;
 import mdpa.gdpr.analysis.dfd.DFDGDPRVertex;
@@ -12,7 +11,6 @@ import mdpa.gdpr.metamodel.GDPR.PersonalData;
 import mdpa.gdpr.metamodel.contextproperties.Expression;
 import mdpa.gdpr.metamodel.contextproperties.LAFScopeElement;
 import mdpa.gdpr.metamodel.contextproperties.Scope;
-
 import org.apache.log4j.Logger;
 import org.dataflowanalysis.analysis.utils.LoggerManager;
 import org.dataflowanalysis.dfd.datadictionary.Assignment;
@@ -35,8 +33,8 @@ public class UncertaintyUtils {
      * @param scenario {@link ContextDependentAttributeScenario} that is impacting the element
      * @param targetedPerson {@link NaturalPerson} element from the GDPR model that is targeted by the CDA
      */
-    public static void impactBehavior(Node element, DFDGDPRVertex impactedElement, DataDictionary dataDictionary, ContextDependentAttributeSource source,
-                                      ContextDependentAttributeScenario scenario, NaturalPerson targetedPerson) {
+    public static void impactBehavior(Node element, DFDGDPRVertex impactedElement, DataDictionary dataDictionary,
+            ContextDependentAttributeSource source, ContextDependentAttributeScenario scenario, NaturalPerson targetedPerson) {
         logger.debug("Modifying behavior for impacted element " + element.getEntityName());
 
         List<PersonalData> targetedData = impactedElement.getOutgoingData()
@@ -62,37 +60,51 @@ public class UncertaintyUtils {
      * @param scenario {@link ContextDependentAttributeScenario} that is impacting the element
      * @param targetedData {@link Data} element from the GDPR model that is targeted by the CDA
      */
-    public static void impactBehavior(Node element, DFDGDPRVertex impactedElement, DataDictionary dataDictionary, ContextDependentAttributeSource source,
-                                          ContextDependentAttributeScenario scenario, Data targetedData) {
-        if (element.getBehavior().getOutPin().stream()
-                .noneMatch(it -> it.getEntityName().equals(targetedData.getEntityName()))) {
+    public static void impactBehavior(Node element, DFDGDPRVertex impactedElement, DataDictionary dataDictionary,
+            ContextDependentAttributeSource source, ContextDependentAttributeScenario scenario, Data targetedData) {
+        if (element.getBehavior()
+                .getOutPin()
+                .stream()
+                .noneMatch(it -> it.getEntityName()
+                        .equals(targetedData.getEntityName()))) {
             logger.info("Scenario" + scenario.getName() + " does not impact " + impactedElement.getName());
             return;
         }
 
         logger.debug("Modifying behavior for impacted element " + element.getEntityName());
 
-        if (element.getBehavior().getOutPin().isEmpty()) {
+        if (element.getBehavior()
+                .getOutPin()
+                .isEmpty()) {
             logger.debug("Behavior for the element will not be modified, as it does not output any data!");
             return;
         }
 
-        Pin outputPin = element.getBehavior().getOutPin().stream().filter(it -> it.getEntityName()
+        Pin outputPin = element.getBehavior()
+                .getOutPin()
+                .stream()
+                .filter(it -> it.getEntityName()
                         .equals(targetedData.getEntityName()))
                 .findAny()
                 .orElseThrow();
-        element.getBehavior().getAssignment().add(UncertaintyUtils.createImpactAssignment(element, outputPin, scenario, source, dataDictionary));
+        element.getBehavior()
+                .getAssignment()
+                .add(UncertaintyUtils.createImpactAssignment(element, outputPin, scenario, source, dataDictionary));
 
         for (Data data : impactedElement.getOutgoingData()) {
             if (!(data instanceof PersonalData personalData)) {
                 continue;
             }
-            Pin dataOutputPin = element.getBehavior().getOutPin().stream()
+            Pin dataOutputPin = element.getBehavior()
+                    .getOutPin()
+                    .stream()
                     .filter(pin -> pin.getEntityName()
                             .equals(personalData.getEntityName()))
                     .findAny()
                     .orElseThrow(() -> new IllegalArgumentException("Element does not have output pin named after outgoing personal data!"));
-            element.getBehavior().getAssignment().add(UncertaintyUtils.createPersonAssignment(element, dataOutputPin, personalData, dataDictionary));
+            element.getBehavior()
+                    .getAssignment()
+                    .add(UncertaintyUtils.createPersonAssignment(element, dataOutputPin, personalData, dataDictionary));
         }
     }
 
@@ -105,13 +117,17 @@ public class UncertaintyUtils {
      * @param dataDictionary Data dictionary used to resolve the labels from the CDA source and scenario
      * @return Returns an assignment that set the labels that the CDA source and scenario should set
      */
-    private static Assignment createImpactAssignment(Node element, Pin outputPin, ContextDependentAttributeScenario scenario, ContextDependentAttributeSource source, DataDictionary dataDictionary) {
+    private static Assignment createImpactAssignment(Node element, Pin outputPin, ContextDependentAttributeScenario scenario,
+            ContextDependentAttributeSource source, DataDictionary dataDictionary) {
         List<Label> values = UncertaintyUtils.getAppliedLabel(source, scenario, dataDictionary);
         Assignment attributeAssignment = datadictionaryFactory.eINSTANCE.createAssignment();
         attributeAssignment.setTerm(datadictionaryFactory.eINSTANCE.createTRUE());
-        attributeAssignment.getInputPins().addAll(element.getBehavior().getInPin());
+        attributeAssignment.getInputPins()
+                .addAll(element.getBehavior()
+                        .getInPin());
         attributeAssignment.setOutputPin(outputPin);
-        attributeAssignment.getOutputLabels().addAll(values);
+        attributeAssignment.getOutputLabels()
+                .addAll(values);
         return attributeAssignment;
     }
 
@@ -125,12 +141,15 @@ public class UncertaintyUtils {
      */
     private static Assignment createPersonAssignment(Node element, Pin dataOutputPin, PersonalData personalData, DataDictionary dataDictionary) {
         Assignment assignment = datadictionaryFactory.eINSTANCE.createAssignment();
-        assignment.getInputPins().addAll(element.getBehavior().getInPin());
+        assignment.getInputPins()
+                .addAll(element.getBehavior()
+                        .getInPin());
         assignment.setOutputPin(dataOutputPin);
         assignment.setTerm(datadictionaryFactory.eINSTANCE.createTRUE());
         personalData.getDataReferences()
                 .forEach(person -> {
-                    assignment.getOutputLabels().add(UncertaintyUtils.getLabelForNaturalPerson(dataDictionary, person));
+                    assignment.getOutputLabels()
+                            .add(UncertaintyUtils.getLabelForNaturalPerson(dataDictionary, person));
                 });
         assignment.setEntityName("Send " + personalData.getEntityName());
         return assignment;
@@ -145,12 +164,14 @@ public class UncertaintyUtils {
     private static Label getLabelForNaturalPerson(DataDictionary dataDictionary, NaturalPerson person) {
         LabelType labelType = dataDictionary.getLabelTypes()
                 .stream()
-                .filter(it -> it.getEntityName().equals("NaturalPerson"))
+                .filter(it -> it.getEntityName()
+                        .equals("NaturalPerson"))
                 .findAny()
                 .orElseThrow();
         return labelType.getLabel()
                 .stream()
-                .filter(it -> it.getEntityName().equals(person.getEntityName()))
+                .filter(it -> it.getEntityName()
+                        .equals(person.getEntityName()))
                 .findAny()
                 .orElseThrow();
     }
@@ -174,7 +195,8 @@ public class UncertaintyUtils {
      * @return Returns true, if the given scope element matches the vertex. Otherwise, the method returns false.
      */
     public static boolean scopeElementApplicable(DFDGDPRVertex vertex, LAFScopeElement scopeElement) {
-        boolean matches = vertex.getRelatedElements().contains(scopeElement.getLafElement());
+        boolean matches = vertex.getRelatedElements()
+                .contains(scopeElement.getLafElement());
         if (scopeElement.isNegated()) {
             return !matches;
         } else {
@@ -183,10 +205,8 @@ public class UncertaintyUtils {
     }
 
     /**
-     * Determines when a CDA should be reapplied at a vertex.
-     * This happens in the following cases:
-     * - Initial application of the CDA
-     * - Context between vertices has changed
+     * Determines when a CDA should be reapplied at a vertex. This happens in the following cases: - Initial application of
+     * the CDA - Context between vertices has changed
      * @param matchingVertices Total list of vertices that have been matched
      * @param vertex Vertex that checked
      * @return Returns true, if the CDA should be reapplied at the given vertex. Otherwise, the method returns false.
@@ -214,7 +234,8 @@ public class UncertaintyUtils {
      * @param dataDictionary Data dictionary used to resolve the labels
      * @return Returns a list of labels that are applied by the given CDA source and scenario
      */
-    public static List<Label> getAppliedLabel(ContextDependentAttributeSource source, ContextDependentAttributeScenario scenario, DataDictionary dataDictionary) {
+    public static List<Label> getAppliedLabel(ContextDependentAttributeSource source, ContextDependentAttributeScenario scenario,
+            DataDictionary dataDictionary) {
         LabelType labelType = dataDictionary.getLabelTypes()
                 .stream()
                 .filter(it -> it.getEntityName()

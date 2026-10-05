@@ -1,8 +1,8 @@
 package mdpa.gdpr.analysis;
 
 import java.util.Optional;
-import mdpa.gdpr.analysis.resource.GDPRResourceProvider;
 import mdpa.gdpr.analysis.dfd.DFDGDPRFlowGraphCollection;
+import mdpa.gdpr.analysis.resource.GDPRResourceProvider;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.dataflowanalysis.analysis.DataFlowConfidentialityAnalysis;

@@ -4,9 +4,9 @@ import java.util.List;
 import mdpa.gdpr.analysis.validation.AnalysisExecutor;
 import mdpa.gdpr.analysis.validation.GDPRModelBuilder;
 import mdpa.gdpr.analysis.validation.ScalibilityParameter;
-import mdpa.gdpr.metamodel.contextproperties.ScopeSet;
-import mdpa.gdpr.metamodel.contextproperties.ScopeDependentAssessmentFact;
 import mdpa.gdpr.metamodel.contextproperties.SAFAnnotation;
+import mdpa.gdpr.metamodel.contextproperties.ScopeDependentAssessmentFact;
+import mdpa.gdpr.metamodel.contextproperties.ScopeSet;
 
 public class PropagationScalibilityCase extends AbstractScalibilityCase {
 
